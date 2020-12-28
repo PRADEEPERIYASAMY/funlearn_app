@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_nav_graph"
+    app:startDestination="@id/parentDashBoardFragment">
+
+    <fragment
+        android:id="@+id/parentDashBoardFragment"
+        android:name="com.example.funlearnv2.parent.view.fragment.ParentDashBoardFragment"
+        android:label="fragment_parent_dash_board"
+        tools:layout="@layout/fragment_parent_dash_board" />
+</navigation>

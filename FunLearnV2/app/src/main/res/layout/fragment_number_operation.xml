@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.NumberOperationFragment"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/number_one"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/operator"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:text="plus"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/number_two"
+        app:layout_constraintEnd_toStartOf="@+id/number_two"
+        app:layout_constraintStart_toEndOf="@+id/number_one"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/number_two"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/answer"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/operator"
+        app:layout_constraintStart_toStartOf="@+id/operator"
+        app:layout_constraintTop_toBottomOf="@+id/operator" />
+
+    <Button
+        android:id="@+id/status_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="submit"
+        android:tag="submit"
+        android:textSize="30sp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/answer"
+        app:layout_constraintStart_toStartOf="@+id/answer"
+        app:layout_constraintTop_toBottomOf="@+id/answer" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/operator_result_recyclerview"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        tools:itemCount="100"
+        tools:listitem="@layout/item_operator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_button"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.ColouringOneFragment"
+    android:padding="16dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/colouring_list_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_alphabet_words" />
+
+    <RelativeLayout
+        android:id="@+id/colouring_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/coloring_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/alphabet_list_container"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/alphabet_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/colouring_back_fab_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.7" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/colouring_menu_fab_button"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/colouring_clear_fab_button"
+                    app:layout_constraintStart_toStartOf="@+id/guideline2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/colouring_clear_fab_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.7" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="110dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="270dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/alphabet_list_recyclerview"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible">
+                <LinearLayout
+                    android:id="@+id/color_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="horizontal" />
+
+                <EditText
+                    android:id="@+id/color_in_hex"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="166dp" />
+
+                <Button
+                    android:id="@+id/color_in_view"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="263dp"
+                    tools:layout_editor_absoluteY="163dp" />
+
+                <view
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#949494"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="225dp" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/stroke_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="303dp" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/eraser_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="352dp" />
+                <LinearLayout
+                    android:id="@+id/bottom_button_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:weightSum="5">
+                    <Button
+                        android:id="@+id/download_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"/>
+                    <Button
+                        android:id="@+id/list_colouring_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"/>
+                    <Button
+                        android:id="@+id/share_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"/>
+                    <Button
+                        android:id="@+id/brush_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"/>
+                    <Button
+                        android:id="@+id/eraser_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="5dp"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/colouring_list_file_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_alphabet_words" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

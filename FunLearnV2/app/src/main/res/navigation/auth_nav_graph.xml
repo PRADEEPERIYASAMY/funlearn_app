@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.funlearnv2.views.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+
+        <action
+            android:id="@+id/action_splashFragment_to_getStartedFragment"
+            app:destination="@id/getStartedFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"/>
+
+        <action
+            android:id="@+id/action_splashFragment_to_childActivity"
+            app:destination="@id/childActivity"
+            app:popUpTo="@id/childActivity"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_userTypeFragment"
+            app:destination="@id/userTypeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/getStartedFragment"
+        android:name="com.example.funlearnv2.views.fragments.GetStartedFragment"
+        android:label="fragment_get_started"
+        tools:layout="@layout/fragment_get_started" >
+        <action
+            android:id="@+id/action_getStartedFragment_to_phoneVerificationFragment"
+            app:destination="@id/phoneVerificationFragment" />
+    </fragment>
+
+    <activity
+        android:id="@+id/childActivity"
+        android:name="com.example.funlearnv2.views.activities.ChildActivity"
+        android:label="activity_child"
+        tools:layout="@layout/activity_child"
+        />
+    <fragment
+        android:id="@+id/phoneVerificationFragment"
+        android:name="com.example.funlearnv2.views.fragments.PhoneVerificationFragment"
+        android:label="fragment_phone_verification"
+        tools:layout="@layout/fragment_phone_verification" >
+        <action
+            android:id="@+id/action_phoneVerificationFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_phoneVerificationFragment_to_userTypeFragment"
+            app:destination="@id/userTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.funlearnv2.views.fragments.ProfilePromptFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile_prompt" >
+        <action
+            android:id="@+id/action_profileFragment_to_userTypeFragment"
+            app:destination="@id/userTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userTypeFragment"
+        android:name="com.example.funlearnv2.views.fragments.UserTypeFragment"
+        android:label="fragment_user_type"
+        tools:layout="@layout/fragment_user_type" >
+        <action
+            android:id="@+id/action_userTypeFragment_to_parentVerificationFragment"
+            app:destination="@id/parentVerificationFragment" />
+        <action
+            android:id="@+id/action_userTypeFragment_to_childActivity"
+            app:destination="@id/childActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/parentVerificationFragment"
+        android:name="com.example.funlearnv2.views.fragments.ParentVerificationFragment"
+        android:label="fragment_parent_verification"
+        tools:layout="@layout/fragment_parent_verification" >
+        <action
+            android:id="@+id/action_parentVerificationFragment_to_parentActivity"
+            app:destination="@id/parentActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/parentActivity"
+        android:name="com.example.funlearnv2.views.activities.ParentActivity"
+        android:label="activity_parent"
+        tools:layout="@layout/activity_parent" />
+
+</navigation>
