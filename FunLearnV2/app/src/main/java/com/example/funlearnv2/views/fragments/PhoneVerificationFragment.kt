@@ -50,6 +50,17 @@ class PhoneVerificationFragment : Fragment() {
     }
 
     private fun initOnclick() {
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+911111111111","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+912222222222","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+913333333333","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+914444444444","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+915555555555","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+916666666666","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+917777777777","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+918888888888","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+919999999999","12345")
+        firebaseAuth.firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+911212121212","12345")
+
         binding.optButton.setOnClickListener {
             when (it.tag) {
                 "send" -> {
@@ -64,7 +75,7 @@ class PhoneVerificationFragment : Fragment() {
                     )
                 }
                 "verify" -> {
-                    findNavController().navigate(R.id.action_phoneVerificationFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_phoneVerificationFragment_to_userTypeFragment)
                 }
             }
         }

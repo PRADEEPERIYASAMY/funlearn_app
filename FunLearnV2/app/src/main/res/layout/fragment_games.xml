@@ -1,174 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.GamesFragment"
-    android:paddingHorizontal="16dp">
+    tools:context=".views.fragments.GamesFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/alphabet_card"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/red">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ABC"
+                android:textColor="@color/blueWhite"
+                android:layout_gravity="bottom|center"
+                android:textSize="@dimen/dimen_56"
+                android:layout_marginBottom="@dimen/dimen_8"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/game_card"
+            android:layout_width="180dp"
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alphabet_card"
+            app:cardBackgroundColor="@color/green">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Game"
+                android:textColor="@color/blueWhite"
+                android:layout_gravity="bottom|center"
+                android:textSize="@dimen/dimen_56"
+                android:layout_marginBottom="@dimen/dimen_8"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/math_card"
+            android:layout_width="180dp"
+            android:layout_height="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/yellow">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:textColor="@color/blueWhite"
+                android:layout_gravity="bottom|center"
+                android:textSize="@dimen/dimen_56"
+                android:layout_marginBottom="@dimen/dimen_8"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/paint_card"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/math_card"
+            app:cardBackgroundColor="@color/violet">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paint"
+                android:textColor="@color/blueWhite"
+                android:layout_gravity="bottom|center"
+                android:textSize="@dimen/dimen_56"
+                android:layout_marginBottom="@dimen/dimen_8"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/game_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/game_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/game_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/game_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/game_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/game_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="game6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_marginVertical="15dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2"
-                android:layout_marginBottom="100dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/draw_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/draw_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/draw_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/draw_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/draw_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/draw_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="draw6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

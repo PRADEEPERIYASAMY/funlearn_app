@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="@dimen/dimen_16"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/ic_user_placeholder"
+    />

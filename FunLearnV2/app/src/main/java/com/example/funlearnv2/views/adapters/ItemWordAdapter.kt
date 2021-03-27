@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.funlearnv2.repository.models.AlphabetWords
+import com.example.funlearnv2.models.AlphabetWords
 import com.example.funlearnv2.databinding.FragmentAlphabetWordsBinding
 import com.example.funlearnv2.databinding.ItemAlphabetWordsBinding
 

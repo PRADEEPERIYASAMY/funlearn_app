@@ -28,6 +28,9 @@ class ChatStatusFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun initOnClick() {
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -1,9 +1,7 @@
 package com.example.funlearnv2.views.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.funlearnv2.R
@@ -32,9 +30,8 @@ class GetStartedFragment : Fragment() {
     }
 
     private fun initOnclick() {
-        binding.signUpButton.setOnClickListener {
-            findNavController().navigate(R.id.action_getStartedFragment_to_phoneVerificationFragment)
-        }
+        binding.signInStartedButton.setOnClickListener { findNavController().navigate(R.id.action_getStartedFragment_to_signInFragment) }
+        binding.signUpStartedButton.setOnClickListener { findNavController().navigate(R.id.action_getStartedFragment_to_signUpFragment) }
     }
 
     override fun onDestroyView() {

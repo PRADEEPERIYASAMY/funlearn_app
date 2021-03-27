@@ -16,23 +16,8 @@
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
-            android:id="@+id/action_nav_game_to_gameTwoFragment"
-            app:destination="@id/gameTwoFragment" />
-        <action
-            android:id="@+id/action_nav_game_to_colouringOneFragment"
-            app:destination="@id/colouringOneFragment" />
-        <action
-            android:id="@+id/action_nav_game_to_colouringThreeFragment"
-            app:destination="@id/colouringThreeFragment" />
-        <action
-            android:id="@+id/action_nav_game_to_gameThreeFragment"
-            app:destination="@id/gameThreeFragment" />
-        <action
-            android:id="@+id/action_nav_game_to_gameOnePlayFragment"
-            app:destination="@id/gameOnePlayFragment" />
-        <action
-            android:id="@+id/action_nav_game_to_gameFourFragment"
-            app:destination="@id/gameFourFragment" />
+            android:id="@+id/action_nav_game_to_funOptionsFragment"
+            app:destination="@id/funOptionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_learn"
@@ -40,41 +25,8 @@
         android:label="fragment_learn"
         tools:layout="@layout/fragment_learn" >
         <action
-            android:id="@+id/action_nav_learn_to_quizFragment"
-            app:destination="@id/quizFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_pdfViewFragment"
-            app:destination="@id/pdfViewFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_tutorialFragment"
-            app:destination="@id/tutorialFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_alphabetMatchFragment"
-            app:destination="@id/alphabetMatchFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_alphabetWordsFragment"
-            app:destination="@id/alphabetWordsFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_alphabetWriteFragment"
-            app:destination="@id/alphabetWriteFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_alphabetListFragment"
-            app:destination="@id/alphabetListFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_alphabetCountFragment"
-            app:destination="@id/alphabetCountFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_numberWriteFragment"
-            app:destination="@id/numberWriteFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_numberOperationFragment"
-            app:destination="@id/numberOperationFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_numberInfoFragment"
-            app:destination="@id/numberInfoFragment" />
-        <action
-            android:id="@+id/action_nav_learn_to_numberCountFragment"
-            app:destination="@id/numberCountFragment" />
+            android:id="@+id/action_nav_learn_to_classTypeFragment"
+            app:destination="@id/classTypeFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_notification"
@@ -165,7 +117,12 @@
         android:id="@+id/numberOperationFragment"
         android:name="com.example.funlearnv2.views.fragments.NumberOperationFragment"
         android:label="fragment_number_operation"
-        tools:layout="@layout/fragment_number_operation" />
+        tools:layout="@layout/fragment_number_operation" >
+        <argument
+            android:name="operatorType"
+            app:argType="com.example.funlearnv2.utils.constants.OperatorTypes"
+            android:defaultValue="ADDITION" />
+    </fragment>
     <fragment
         android:id="@+id/numberWriteFragment"
         android:name="com.example.funlearnv2.views.fragments.NumberWriteFragment"
@@ -206,5 +163,105 @@
             app:argType="string"
             android:defaultValue="default"/>
     </fragment>
+    <fragment
+        android:id="@+id/funOptionsFragment"
+        android:name="com.example.funlearnv2.views.fragments.FunOptionsFragment"
+        android:label="fragment_fun_options"
+        tools:layout="@layout/fragment_fun_options" >
+        <action
+            android:id="@+id/action_funOptionsFragment_to_gameTwoFragment"
+            app:destination="@id/gameTwoFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_colouringOneFragment"
+            app:destination="@id/colouringOneFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_colouringThreeFragment"
+            app:destination="@id/colouringThreeFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_gameThreeFragment"
+            app:destination="@id/gameThreeFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_gameOnePlayFragment"
+            app:destination="@id/gameOnePlayFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_gameFourFragment"
+            app:destination="@id/gameFourFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_colouringTwoFragment"
+            app:destination="@id/colouringTwoFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_alphabetWriteFragment"
+            app:destination="@id/alphabetWriteFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_alphabetListFragment"
+            app:destination="@id/alphabetListFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_alphabetMatchFragment"
+            app:destination="@id/alphabetMatchFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_alphabetWordsFragment"
+            app:destination="@id/alphabetWordsFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_alphabetCountFragment"
+            app:destination="@id/alphabetCountFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_numberOperationFragment"
+            app:destination="@id/numberOperationFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_numberWriteFragment"
+            app:destination="@id/numberWriteFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_numberInfoFragment"
+            app:destination="@id/numberInfoFragment" />
+        <action
+            android:id="@+id/action_funOptionsFragment_to_numberCountFragment"
+            app:destination="@id/numberCountFragment" />
+        <argument
+            android:name="funType"
+            app:argType="com.example.funlearnv2.utils.constants.FunType"
+            android:defaultValue="ALPHABETS" />
+    </fragment>
+    <fragment
+        android:id="@+id/classTypeFragment"
+        android:name="com.example.funlearnv2.views.fragments.ClassTypeFragment"
+        android:label="fragment_class_type"
+        tools:layout="@layout/fragment_class_type" >
+        <action
+            android:id="@+id/action_classTypeFragment_to_classContentFragment"
+            app:destination="@id/classContentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/classContentFragment"
+        android:name="com.example.funlearnv2.views.fragments.ClassContentFragment"
+        android:label="fragment_class_content"
+        tools:layout="@layout/fragment_class_content" >
+        <action
+            android:id="@+id/action_classContentFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_classContentFragment_to_pdfViewFragment"
+            app:destination="@id/pdfViewFragment" />
+        <action
+            android:id="@+id/action_classContentFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+        <action
+            android:id="@+id/action_classContentFragment_to_tutorialFragment"
+            app:destination="@id/tutorialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.example.funlearnv2.views.fragments.WebFragment"
+        android:label="fragment_web"
+        tools:layout="@layout/fragment_web" />
+    <fragment
+        android:id="@+id/listFilesFragment"
+        android:name="com.example.funlearnv2.views.fragments.ListFilesFragment"
+        android:label="fragment_list_files"
+        tools:layout="@layout/fragment_list_files" />
+    <activity
+        android:id="@+id/authenticationActivity"
+        android:name="com.example.funlearnv2.views.activities.AuthenticationActivity"
+        android:label="activity_authentication"
+        tools:layout="@layout/activity_authentication" />
 
 </navigation>

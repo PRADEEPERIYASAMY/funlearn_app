@@ -1,395 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fitsSystemWindows="true"
+tools:context=".views.fragments.LearnFragment">
+
+<com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_bar_height"
+    android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:toolbarId="@+id/toolbar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+</com.google.android.material.appbar.AppBarLayout>
+
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.LearnFragment"
-    android:paddingHorizontal="16dp">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/class_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        tools:itemCount="10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_class"
+        android:paddingTop="@dimen/dimen_56"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
+</androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/video_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/video_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/video_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/video_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/video_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/video_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_marginVertical="15dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/pdf_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/pdf_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/pdf_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/pdf_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/pdf_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/pdf_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="pdf6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_marginVertical="15dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/alpha_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="alpha1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/alpha_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="alpha2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/alpha_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="video3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/alpha_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="alpha4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/alpha_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="alpha5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/alpha_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="alpha6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_marginVertical="15dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/num_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/num_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/num_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/num_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/num_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/num_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="num6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_marginVertical="15dp"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2"
-                android:layout_marginBottom="100dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/test_1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test1"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/test_2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test2"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/test_3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test3"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:weightSum="3">
-                    <Button
-                        android:id="@+id/test_4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test4"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/test_5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test5"
-                        android:layout_margin="7dp"/>
-                    <Button
-                        android:id="@+id/test_6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textAllCaps="false"
-                        android:text="test6"
-                        android:layout_margin="7dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

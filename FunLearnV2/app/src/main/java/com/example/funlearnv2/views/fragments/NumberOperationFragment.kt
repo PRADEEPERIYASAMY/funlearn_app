@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.funlearnv2.views.adapters.ItemOperatorAdapter
-import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
-import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
+import com.example.funlearnv2.R
 import com.example.funlearnv2.databinding.FragmentNumberOperationBinding
+import com.example.funlearnv2.utils.constants.ButtonStatus
+import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
+import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
+import com.example.funlearnv2.views.adapters.ItemOperatorAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.collections.ArrayList
 
@@ -20,11 +23,12 @@ class NumberOperationFragment : Fragment() {
     private var _binding: FragmentNumberOperationBinding? = null
     private val binding
         get() = _binding!!
-    private val type: Int = 0
+    private var type: Int = 0
     private var firstNum = 0
     private var secondNum = 0
     private var resultNum = 0
     private lateinit var viewModel: FirebaseDbViewModel
+    private val operatorImages = listOf(R.drawable.ic_plus, R.drawable.ic_minus, R.drawable.ic_multiply, R.drawable.ic_divide, R.drawable.ic_fillup)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,51 +41,46 @@ class NumberOperationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        type = NumberOperationFragmentArgs.fromBundle(requireArguments()).operatorType.type
+        binding.operator.setImageDrawable(ContextCompat.getDrawable(requireContext(), operatorImages[type]))
         initViewModel()
+        initOnClick()
+    }
+
+    private fun initOnClick() {
         binding.statusButton.setOnClickListener {
-            when (it.tag) {
-                "submit" -> {
-                    if (binding.answer.text.toString().equals(resultNum.toString())) {
-                        it.tag = "next"
-                        binding.statusButton.text = "next"
+            when (binding.statusButton.text.toString()) {
+                ButtonStatus.SUBMIT.type -> {
+                    if (binding.answer.text.toString() == resultNum.toString()) {
+                        binding.statusButton.text = ButtonStatus.NEXT.type
                         resultSetter()
                     } else {
                         binding.answer.setText("")
                     }
                 }
-                "next" -> {
-                    it.tag = "submit"
-                    binding.statusButton.text = "submit"
-                    valueSetter()
+                ButtonStatus.NEXT.type -> {
+                    binding.statusButton.text = ButtonStatus.SUBMIT.type
+                    initValue()
                 }
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun initViewModel() {
         viewModel = ViewModelProvider(requireActivity()).get(FirebaseDbViewModel::class.java)
         if (viewModel.firebaseDbLiveData.value == null) {
-            viewModel.doFireStoreAction(FirebaseDbAction.FetchFirebaseDbData)
+            viewModel.doAction(FirebaseDbAction.FetchFirebaseDbData)
         }
         viewModel.firebaseDbLiveData.observe(
             viewLifecycleOwner,
             {
             }
         )
-        viewModel.progress.observe(
-            viewLifecycleOwner,
-            {
-            }
-        )
-        valueSetter()
+        initValue()
     }
 
-    private fun valueSetter() {
+    private fun initValue() {
+        binding.answer.setText("")
         resultNum = 0
         resultSetter()
         val firstNumList: MutableList<Int> = ArrayList()
@@ -155,5 +154,10 @@ class NumberOperationFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 10)
             setHasFixedSize(true)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

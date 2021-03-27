@@ -1,34 +1,37 @@
 package com.example.funlearnv2.views.fragments
 
-import android.Manifest
-import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.media.ThumbnailUtils
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.funlearnv2.views.adapters.ItemPublicChatMessageAdapter
-import com.example.funlearnv2.repository.models.Comments
-import com.example.funlearnv2.repository.models.Message
-import com.example.funlearnv2.utils.FileUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.funlearnv2.databinding.FragmentPublicChatBinding
+import com.example.funlearnv2.models.MessageTypes
+import com.example.funlearnv2.models.Messages
+import com.example.funlearnv2.models.Mode
+import com.example.funlearnv2.models.Roles
+import com.example.funlearnv2.utils.toGone
+import com.example.funlearnv2.utils.toVisible
+import com.example.funlearnv2.viewmodels.FireStoreViewModel
+import com.example.funlearnv2.viewmodels.actions.FireStoreAction
+import com.example.funlearnv2.views.adapters.ItemPublicChatMessageAdapter
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.storage.FirebaseStorage
+import com.vanniktech.emoji.EmojiPopup
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PublicChatFragment : Fragment() {
@@ -37,208 +40,169 @@ class PublicChatFragment : Fragment() {
     private val binding
         get() = _binding!!
 
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+
+    private var chosedFile = ""
+    private lateinit var viewModel: FireStoreViewModel
+    private var publicChatList = arrayListOf<Messages>()
+    private val itemPublicChatMessageAdapter = ItemPublicChatMessageAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentPublicChatBinding.inflate(inflater, container, false)
+        initMessageRecycler()
+        initViewModel()
         return binding.root
     }
-    private val publicChatList = ArrayList<Message>()
-    private var chosedFile = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.postRecyclerView.adapter = ItemPublicChatMessageAdapter(publicChatList, findNavController())
-        initOnclick()
-        initFetchListener()
-        /*binding.postRecyclerView.apply {
-            adapter = ItemPublicChatMessageAdapter(object :InterfaceSendMessageOnClick{
-                override fun sendMessage(type: String, messageContent: String, messageDescription: String) {
-
-                }
-            })
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-        }*/
+        /*observeClickedMessage()*/
+        itemPublicChatMessageAdapter.setNavController(findNavController())
+        initOnClick()
+        initTextWatcher()
     }
 
-    private fun initFetchListener() {
-        publicChatList.clear()
-        FirebaseDatabase.getInstance().reference.child("Chat/PublicChat").addChildEventListener(
-            object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    if (snapshot.exists()) {
-                        snapshot.children.forEach {
-                            publicChatList.add(it.getValue<Message>()!!)
-                            binding.postRecyclerView.adapter!!.notifyDataSetChanged()
-                            binding.postRecyclerView.scrollToPosition(publicChatList.size - 1)
-                        }
-                    }
-                }
+    private fun initOnClick() {
+        binding.buttonSend.setOnClickListener {
+            createPost("", binding.inputMessage.text.toString(), MessageTypes.TEXT)
+        }
+        binding.buttonVoiceText.setOnClickListener {
+            promptSpeechInput()
+        }
 
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                }
+        val popup = EmojiPopup.Builder.fromRootView(binding.rootView).build(binding.inputMessage)
+        binding.buttonEmoji.setOnClickListener {
+            popup.toggle()
+        }
+    }
 
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
+    private fun initTextWatcher() {
+        binding.inputMessage.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isEmpty()) binding.buttonSend.toGone()
+                else binding.buttonSend.toVisible()
+            }
+        })
+    }
+
+    private fun promptSpeechInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
-    }
-
-    private fun initOnclick() {
-        binding.sendMessageButton.setOnClickListener {
-            val time = System.currentTimeMillis()
-            val message = Message(
-                MessageContent = "",
-                MessageDescription = binding.inputMessage.text.toString(),
-                Type = "txt",
-                Downloaded = "No",
-                Time = time.toString(),
-                PostBy = FirebaseAuth.getInstance().currentUser!!.uid,
-                CommentsCount = 0.toString(),
-                LikesCount = 0.toString(),
-                DisLikesCount = 0.toString(),
-                Comments = arrayListOf(Comments("", "", "", "", ""))
-            )
-
-            FirebaseDatabase.getInstance().reference.child("Chat/PublicChat/${FirebaseAuth.getInstance().currentUser!!.uid}-PublicChat-$time/Message")
-                .setValue(message).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(requireContext(), "baked", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
-        binding.sendFilesButton.setOnClickListener {
-            if (binding.postOption.visibility == View.GONE) binding.postOption.visibility = View.VISIBLE else binding.postOption.visibility = View.GONE
-        }
-        binding.sendOthersButton.setOnClickListener {
-            askPermissionAndBrowseFile()
-        }
-    }
-
-    private fun askPermissionAndBrowseFile() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val permisson = ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            if (permisson != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    MY_REQUEST_CODE_PERMISSION
-                )
-                return
-            }
-        }
-        doBrowseFile()
-    }
-
-    private fun doBrowseFile() {
-        var chooseFileIntent = Intent(Intent.ACTION_GET_CONTENT)
-        chooseFileIntent.type = "*/*"
-        chooseFileIntent.addCategory(Intent.CATEGORY_OPENABLE)
-        chooseFileIntent = Intent.createChooser(chooseFileIntent, "Choose a file")
-        startActivityForResult(chooseFileIntent, MY_RESULT_CODE_FILECHOOSER)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
-        when (requestCode) {
-            MY_REQUEST_CODE_PERMISSION -> {
-
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this.context, "Permission granted!", Toast.LENGTH_SHORT).show()
-                    doBrowseFile()
-                } else {
-                    Toast.makeText(this.context, "Permission denied!", Toast.LENGTH_SHORT).show()
-                }
-            }
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        intent.putExtra(
+            RecognizerIntent.EXTRA_PROMPT,
+            "tell something"
+        )
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT)
+        } catch (a: ActivityNotFoundException) {
+            Toast.makeText(
+                context,
+                "not supported",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            MY_RESULT_CODE_FILECHOOSER -> if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    val fileUri: Uri? = data.data
-                    var filePath: String? = null
-                    try {
-                        filePath = FileUtil.getPath(requireContext(), fileUri!!)
-                    } catch (e: Exception) {
-                        Toast.makeText(this.context, "Error: $e", Toast.LENGTH_SHORT).show()
-                    }
-                    chosedFile = filePath!!
-                    getThumbnail(filePath)
-                    uploadFile(fileUri.toString(), filePath)
-                }
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun uploadFile(selectedUri: String, selectedPath: String) {
-        var fileType: String? = null
-        fileType = when (true) {
-            selectedPath.endsWith(".png"), selectedPath.endsWith(".jpg"), selectedPath.endsWith(".jpeg") -> "png"
-            selectedPath.endsWith(".gif") -> "gif"
-            selectedPath.endsWith(".pdf") -> "pdf"
-            selectedPath.endsWith(".ppt") -> "ppt"
-            selectedPath.endsWith(".mp4") -> "mp4"
-            selectedPath.endsWith(".mp3") -> "mp3"
-            selectedPath.endsWith(".docx") -> "docx"
-            selectedPath.endsWith(".apk") -> "apk"
-            else -> "null"
-        }
-        val time = System.currentTimeMillis()
-        val firebaseStorageReference = FirebaseStorage.getInstance().reference.child("FunLearn/Chat/Public/$fileType/${FirebaseAuth.getInstance().currentUser!!.uid}-$time.$fileType")
-        val uploadTask = firebaseStorageReference.putFile(Uri.parse(selectedUri)).addOnCompleteListener {
-            if (it.isSuccessful) {
-                val result = it.result.metadata!!.reference!!.downloadUrl
-                result.addOnSuccessListener { uri ->
-                    val message = Message(
-                        MessageContent = uri.toString(),
-                        MessageDescription = binding.inputMessage.text.toString(),
-                        Type = fileType,
-                        Downloaded = "No",
-                        Time = time.toString(),
-                        PostBy = FirebaseAuth.getInstance().currentUser!!.uid,
-                        CommentsCount = 0.toString(),
-                        LikesCount = 0.toString(),
-                        DisLikesCount = 0.toString(),
-                        Comments = arrayListOf(Comments("", "", "", "", ""))
-                    )
-
-                    FirebaseDatabase.getInstance().reference.child("Chat/PublicChat/${FirebaseAuth.getInstance().currentUser!!.uid}-PublicChat-$time/Message")
-                        .setValue(message).addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                Toast.makeText(requireContext(), "baked", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+        when (requestCode) {
+            REQ_CODE_SPEECH_INPUT -> {
+                if (resultCode == RESULT_OK && null != data) {
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    binding.inputMessage.setText(result.toString())
                 }
             }
         }
     }
 
-    private fun getThumbnail(selectedImageUri: String) {
-        val THUMBSIZE = 128
-
-        val thumbImage = ThumbnailUtils.extractThumbnail(
-            BitmapFactory.decodeFile(selectedImageUri),
-            THUMBSIZE,
-            THUMBSIZE
+    private fun createPost(
+        messageContent: String,
+        messageDescription: String,
+        messageTypes: MessageTypes
+    ) {
+        viewModel.doAction(
+            FireStoreAction.CreateMessage(
+                Messages(
+                    id = "${firebaseAuth.currentUser!!.uid}------${System.currentTimeMillis()}",
+                    role = Roles.CHILD.type,
+                    mode = Mode.PUBLIC.type,
+                    from = firebaseAuth.currentUser!!.uid,
+                    to = Mode.PUBLIC.type,
+                    message_content = messageContent,
+                    message_description = messageDescription,
+                    timeStamp = Timestamp.now(),
+                    message_type = messageTypes.type
+                )
+            )
         )
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(requireActivity()).get(FireStoreViewModel::class.java)
+        /*if (viewModel.messages.value == null) {
+            viewModel.doAction(FireStoreAction.FetchPublicMessages(viewLifecycleOwner))
+        }*/
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun observeMessages() {
+        /*viewModel.messages.removeObservers(viewLifecycleOwner)
+        viewModel.messages.observe(
+            viewLifecycleOwner,
+            {
+                itemPublicChatMessageAdapter.setList(it)
+                itemPublicChatMessageAdapter.notifyDataSetChanged()
+                binding.postRecyclerView.scrollToPosition(it.size - 1)
+            }
+        )*/
+        viewModel.fetchMessages.observe(
+            viewLifecycleOwner,
+            {
+                itemPublicChatMessageAdapter.setList(it)
+                itemPublicChatMessageAdapter.notifyDataSetChanged()
+                binding.postRecyclerView.scrollToPosition(itemPublicChatMessageAdapter.itemCount - 1)
+            }
+        )
+    }
+
+    /*private fun observeClickedMessage() {
+        itemPublicChatMessageAdapter.clickedMessage.removeObservers(viewLifecycleOwner)
+        itemPublicChatMessageAdapter.clickedMessage.observe(
+            viewLifecycleOwner,
+            {
+                val action = CommonChatFragmentDirections.actionNavChatToCommentFragment(it)
+                findNavController().navigate(action)
+            }
+        )
+    }*/
+
+    private fun initMessageRecycler() {
+        binding.postRecyclerView.apply {
+            adapter = itemPublicChatMessageAdapter
+            layoutManager = LinearLayoutManager(context)
+            hasFixedSize()
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun onResume() {
+        super.onResume()
+        observeMessages()
     }
 
     override fun onDestroyView() {
@@ -247,11 +211,6 @@ class PublicChatFragment : Fragment() {
     }
 
     companion object {
-        private const val MY_REQUEST_CODE_PERMISSION = 1000
-        private const val MY_RESULT_CODE_FILECHOOSER = 1001
+        private const val REQ_CODE_SPEECH_INPUT = 100
     }
-}
-
-interface InterfaceSendMessageOnClick {
-    abstract fun sendMessage(type: String, messageContent: String, messageDescription: String)
 }

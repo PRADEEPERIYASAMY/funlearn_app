@@ -38,7 +38,7 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 if (firebaseAuth.currentUser == null)
-                    findNavController().navigate(R.id.action_splashFragment_to_getStartedFragment)
+                    findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
                 else
                     findNavController().navigate(R.id.action_splashFragment_to_childActivity)
             },
@@ -52,6 +52,6 @@ class SplashFragment : Fragment() {
     }
 
     companion object {
-        private const val SPLASH_TIME_OUT = 100
+        private const val SPLASH_TIME_OUT = 2000
     }
 }

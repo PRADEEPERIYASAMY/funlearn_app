@@ -28,18 +28,7 @@ class LearnFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.alpha1.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_learn_to_alphabetListFragment)
-        }
-        binding.alpha2.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_learn_to_alphabetMatchFragment)
-        }
-        binding.alpha3.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_learn_to_alphabetWordsFragment)
-        }
-        binding.num1.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_learn_to_numberOperationFragment)
-        }
+
     }
 
     override fun onDestroyView() {

@@ -1,15 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp">
 
-</FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/child_profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_marginTop="75dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/heading_child"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Child"
+                android:textColor="@color/greenWhite"
+                android:textStyle="bold"
+                android:textSize="50sp"
+                android:layout_below="@id/child_profile_image"
+                android:layout_marginTop="@dimen/dimen_24"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/child_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/placeholder_icon"
+                android:hint="child name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_below="@id/heading_child"
+                android:layout_marginTop="@dimen/dimen_16">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/child_name"
+                android:layout_marginTop="@dimen/dimen_16">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/child_grade"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/placeholder_icon"
+                    app:endIconMode="dropdown_menu"
+                    android:hint="grade"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/child_dob"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/placeholder_icon"
+                    android:hint="DOB"
+                    android:layout_alignParentEnd="true"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/container_one"
+                android:layout_marginTop="@dimen/dimen_16">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/child_gender"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/placeholder_icon"
+                    app:endIconMode="dropdown_menu"
+                    android:hint="gender"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/child_online_visibility"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/placeholder_icon"
+                    android:hint="expose"
+                    android:layout_alignParentEnd="true"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/child_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/placeholder_icon"
+                android:hint="child email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_below="@id/container_two"
+                android:layout_marginTop="@dimen/dimen_16">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/child_description"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="child description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_below="@id/child_email"
+                android:layout_marginTop="@dimen/dimen_16">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:cardCornerRadius="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_16">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/heading_profile_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pic Option . . . "
+                android:textColor="@color/greenWhite"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginTop="@dimen/dimen_8"/>
+            <ImageView
+                android:id="@+id/file_option_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/placeholder_icon"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginLeft="@dimen/dimen_24"
+                android:layout_below="@id/heading_profile_type"/>
+            <ImageView
+                android:id="@+id/bake_option_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/placeholder_icon"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:layout_marginRight="@dimen/dimen_24"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/heading_profile_type"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

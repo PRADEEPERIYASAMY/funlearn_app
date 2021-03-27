@@ -12,19 +12,11 @@
         tools:layout="@layout/fragment_splash" >
 
         <action
-            android:id="@+id/action_splashFragment_to_getStartedFragment"
-            app:destination="@id/getStartedFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"/>
-
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
         <action
             android:id="@+id/action_splashFragment_to_childActivity"
-            app:destination="@id/childActivity"
-            app:popUpTo="@id/childActivity"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_splashFragment_to_userTypeFragment"
-            app:destination="@id/userTypeFragment" />
-
+            app:destination="@id/childActivity" />
     </fragment>
 
     <fragment
@@ -35,6 +27,12 @@
         <action
             android:id="@+id/action_getStartedFragment_to_phoneVerificationFragment"
             app:destination="@id/phoneVerificationFragment" />
+        <action
+            android:id="@+id/action_getStartedFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_getStartedFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 
     <activity
@@ -49,20 +47,20 @@
         android:label="fragment_phone_verification"
         tools:layout="@layout/fragment_phone_verification" >
         <action
-            android:id="@+id/action_phoneVerificationFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_phoneVerificationFragment_to_userTypeFragment"
             app:destination="@id/userTypeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.funlearnv2.views.fragments.ProfilePromptFragment"
+        android:id="@+id/signUpFragment"
+        android:name="com.example.funlearnv2.views.fragments.SignUpFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile_prompt" >
+        tools:layout="@layout/fragment_sign_up" >
         <action
-            android:id="@+id/action_profileFragment_to_userTypeFragment"
-            app:destination="@id/userTypeFragment" />
+            android:id="@+id/action_profileFragment_to_phoneVerificationFragment"
+            app:destination="@id/phoneVerificationFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_getStartedFragment"
+            app:destination="@id/getStartedFragment" />
     </fragment>
     <fragment
         android:id="@+id/userTypeFragment"
@@ -90,5 +88,24 @@
         android:name="com.example.funlearnv2.views.activities.ParentActivity"
         android:label="activity_parent"
         tools:layout="@layout/activity_parent" />
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.funlearnv2.views.fragments.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome">
+
+        <action
+            android:id="@+id/action_welcomeFragment_to_getStartedFragment"
+            app:destination="@id/getStartedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.funlearnv2.views.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_userTypeFragment"
+            app:destination="@id/userTypeFragment" />
+    </fragment>
 
 </navigation>

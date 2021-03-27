@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.funlearnv2.databinding.FragmentAlphabetListBinding
+import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
+import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
 import com.example.funlearnv2.views.adapters.ItemAlphabetAdapter
 import com.example.funlearnv2.views.adapters.ItemAlphabetWordAdapter
-import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
-import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
-import com.example.funlearnv2.databinding.FragmentAlphabetListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,17 +56,12 @@ class AlphabetListFragment : Fragment() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(requireActivity()).get(FirebaseDbViewModel::class.java)
         if (viewModel.firebaseDbLiveData.value == null) {
-            viewModel.doFireStoreAction(FirebaseDbAction.FetchFirebaseDbData)
+            viewModel.doAction(FirebaseDbAction.FetchFirebaseDbData)
         }
         viewModel.firebaseDbLiveData.observe(
             viewLifecycleOwner,
             {
                 initWordsRecyclerView()
-            }
-        )
-        viewModel.progress.observe(
-            viewLifecycleOwner,
-            {
             }
         )
         initWordsRecyclerView()

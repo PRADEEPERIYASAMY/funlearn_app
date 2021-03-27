@@ -1,6 +1,6 @@
 package com.example.funlearnv2.FirebaseSource
 
-import com.example.funlearnv2.repository.models.FirebaseDbModels
+import com.example.funlearnv2.models.FirebaseDbModels
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

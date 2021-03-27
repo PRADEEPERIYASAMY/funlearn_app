@@ -21,9 +21,16 @@ abstract class BaseViewModel<Action> : ViewModel(), CoroutineScope {
     val success: LiveData<String>
         get() = mutableSuccess
 
-    protected var mutableProgress = MutableLiveData<Boolean>()
-    val progress: LiveData<Boolean>
-        get() = mutableProgress
+    protected val mutableLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = mutableLoading
 
-    abstract fun doFireStoreAction(action: Action): Any
+    abstract fun doAction(action: Action): Any
+
+    fun setSuccess(string: String) {
+        mutableSuccess.value = string
+    }
+
+    fun setError(string: String) {
+        mutableError.value = string
+    }
 }

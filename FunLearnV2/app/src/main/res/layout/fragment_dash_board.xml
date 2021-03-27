@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.DashBoardFragment">
 
     <TextView
@@ -17,4 +18,72 @@
         android:layout_height="200dp"
         android:visibility="gone"/>
 
-</FrameLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dashboard_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:itemCount="10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_dashboard"
+        android:layout_marginHorizontal="@dimen/dimen_16"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen_56"/>
+
+    <ImageView
+        android:id="@+id/user_profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dashboard_recycler"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_56"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dashboard_recycler"
+        android:layout_marginRight="31dp"
+        android:layout_marginBottom="110dp"
+        android:layout_toLeftOf="@id/user_profile_image"
+        android:text="score"
+        android:textColor="@color/blueWhite"
+        android:textSize="@dimen/dimen_24" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dashboard_recycler"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="55dp"
+        android:layout_toLeftOf="@id/user_profile_image"
+        android:text="1000"
+        android:textColor="@color/blueWhite"
+        android:textSize="@dimen/dimen_32" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dashboard_recycler"
+        android:layout_marginLeft="36dp"
+        android:layout_marginBottom="110dp"
+        android:layout_toRightOf="@id/user_profile_image"
+        android:text="cash"
+        android:textColor="@color/blueWhite"
+        android:textSize="@dimen/dimen_24" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dashboard_recycler"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="50dp"
+        android:layout_toRightOf="@id/user_profile_image"
+        android:text="1000"
+        android:textColor="@color/blueWhite"
+        android:textSize="@dimen/dimen_32" />
+
+</RelativeLayout>

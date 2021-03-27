@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dimen_48"
+    android:layout_height="@dimen/dimen_48"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dimen_2"
+    app:cardBackgroundColor="@color/greyLight">
+    <ImageView
+        android:id="@+id/image_piece"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/chess_rook_white"
+        android:padding="@dimen/dimen_8"/>
+</com.google.android.material.card.MaterialCardView>

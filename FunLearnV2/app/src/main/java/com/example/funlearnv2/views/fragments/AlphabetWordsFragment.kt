@@ -55,17 +55,12 @@ class AlphabetWordsFragment : Fragment() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(requireActivity()).get(FirebaseDbViewModel::class.java)
         if (viewModel.firebaseDbLiveData.value == null) {
-            viewModel.doFireStoreAction(FirebaseDbAction.FetchFirebaseDbData)
+            viewModel.doAction(FirebaseDbAction.FetchFirebaseDbData)
         }
         viewModel.firebaseDbLiveData.observe(
             viewLifecycleOwner,
             {
                 initWordsRecyclerView()
-            }
-        )
-        viewModel.progress.observe(
-            viewLifecycleOwner,
-            {
             }
         )
         initWordsRecyclerView()

@@ -7,31 +7,37 @@
     tools:context=".views.fragments.NumberOperationFragment"
     android:padding="16dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/number_one"
         android:layout_width="100dp"
         android:layout_height="70dp"
-        android:textSize="30sp"
+        android:textSize="35sp"
+        android:text="100"
+        android:gravity="center"
+        android:textColor="@color/blueWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/operator"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:gravity="center"
-        android:text="plus"
+        android:src="@drawable/ic_plus"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/number_two"
         app:layout_constraintEnd_toStartOf="@+id/number_two"
         app:layout_constraintStart_toEndOf="@+id/number_one"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/number_two"
         android:layout_width="100dp"
         android:layout_height="70dp"
-        android:textSize="30sp"
+        android:textSize="35sp"
+        android:text="100"
+        android:gravity="center"
+        android:textColor="@color/blueWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,13 +50,11 @@
         app:layout_constraintStart_toStartOf="@+id/operator"
         app:layout_constraintTop_toBottomOf="@+id/operator" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/status_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="@dimen/dimen_56"
         android:text="submit"
-        android:tag="submit"
-        android:textSize="30sp"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="@+id/answer"
         app:layout_constraintStart_toStartOf="@+id/answer"
@@ -62,6 +66,8 @@
         android:layout_height="350dp"
         tools:itemCount="100"
         tools:listitem="@layout/item_operator"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

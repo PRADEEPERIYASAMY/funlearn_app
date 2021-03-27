@@ -19,4 +19,13 @@
         <item name="cornerSize">@dimen/dimen_16</item>
     </style>
 
+    <!--Shape Appearance for toolbar card-->
+    <style name="ShapeAppearance.AppTheme.Toolbar.Card" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/dimen_32</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
 </resources>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.FunOptionsFragment"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/alphabet_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_16"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/alphabet_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="alphabet 1"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/alphabet_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="alphabet 2"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/alphabet_card_3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="alphabet 3"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/alphabet_card_4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="alphabet 4"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/alphabet_card_5"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="alphabet 5"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/number_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_16"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 1"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 2"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 3"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 4"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_5"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 5"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_6"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 6"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_7"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 7"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/number_card_8"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="number 8"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/game_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_16"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/game_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="game 1"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/game_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="game 2"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/game_card_3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="game 3"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/game_card_4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="game 4"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/paint_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/dimen_16"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/paint_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="paint 1"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/paint_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="paint 2"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/paint_card_3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginVertical="@dimen/dimen_8">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="paint 3"
+                    android:textColor="@color/blueWhite"
+                    android:textSize="@dimen/dimen_32"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

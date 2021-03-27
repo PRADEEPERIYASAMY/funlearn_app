@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dimen_32"
+    android:layout_height="@dimen/dimen_32"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_board_piece"
+    app:cardCornerRadius="@dimen/dimen_2"
+    app:cardBackgroundColor="@color/greyLight">
+    <TextView
+        android:id="@+id/x"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/y"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_alpha"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        app:cardCornerRadius="@dimen/dimen_2"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/image_piece"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen_4"/>
+</com.google.android.material.card.MaterialCardView>

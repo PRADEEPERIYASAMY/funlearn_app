@@ -3,6 +3,7 @@ package com.example.funlearnv2.FirebaseSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +16,17 @@ object FirebaseModules {
 
     @Provides
     @Singleton
-    fun giveFirebaseAuth():FirebaseAuth = FirebaseAuth.getInstance()
+    fun giveFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
     @Singleton
-    fun giveFirebaseDatabase():FirebaseDatabase = FirebaseDatabase.getInstance()
+    fun giveFirebaseDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
 
     @Provides
     @Singleton
-    fun givePhoneAuthProvider():PhoneAuthProvider = PhoneAuthProvider.getInstance()
+    fun giveFireStore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Provides
+    @Singleton
+    fun givePhoneAuthProvider(): PhoneAuthProvider = PhoneAuthProvider.getInstance()
 }

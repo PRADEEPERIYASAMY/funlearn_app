@@ -1,20 +1,21 @@
 package com.example.funlearnv2.views.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.funlearnv2.views.adapters.ItemMatchAdapter
-import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
-import com.example.funlearnv2.repository.models.Match
-import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
 import com.example.funlearnv2.databinding.FragmentAlphabetMatchBinding
+import com.example.funlearnv2.models.Match
+import com.example.funlearnv2.utils.get
+import com.example.funlearnv2.viewmodels.FirebaseDbViewModel
+import com.example.funlearnv2.viewmodels.actions.FirebaseDbAction
+import com.example.funlearnv2.views.adapters.ItemMatchAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -29,10 +30,13 @@ class AlphabetMatchFragment : Fragment() {
     private val allList = mutableListOf<String>()
     private val selectedList = mutableListOf<String>()
     private val shuffledList = mutableListOf<String>()
-    
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentAlphabetMatchBinding.inflate(inflater,container,false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentAlphabetMatchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,7 +46,7 @@ class AlphabetMatchFragment : Fragment() {
         ItemTouchHelper(simpleCallback).attachToRecyclerView(binding.matchAnswerRecyclerview)
     }
 
-    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END, 0){
+    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END, 0) {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             val d = viewHolder.adapterPosition
             val t = target.adapterPosition
@@ -53,28 +57,27 @@ class AlphabetMatchFragment : Fragment() {
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            //no swipe required
+            // no swipe required
         }
     }
 
-
-    private fun initViewModel(){
+    private fun initViewModel() {
         viewModel = ViewModelProvider(requireActivity()).get(FirebaseDbViewModel::class.java)
-        if(viewModel.firebaseDbLiveData.value == null){
-            viewModel.doFireStoreAction(FirebaseDbAction.FetchFirebaseDbData)
+        if (viewModel.firebaseDbLiveData.value == null) {
+            viewModel.doAction(FirebaseDbAction.FetchFirebaseDbData)
         }
-        viewModel.firebaseDbLiveData.observe(viewLifecycleOwner,{
-            initMatchEngine(it.Match!!)
-        })
-        viewModel.progress.observe(viewLifecycleOwner, {
-
-        })
+        viewModel.firebaseDbLiveData.observe(
+            viewLifecycleOwner,
+            {
+                initMatchEngine(it.Match!!)
+            }
+        )
         viewModel.firebaseDbLiveData.value?.Match?.let {
             initMatchEngine(it!!)
         }
     }
-    
-    private fun initMatchEngine(match:Match){
+
+    private fun initMatchEngine(match: Match) {
         val names = match.Names?.split("----------")!!
         val images = match.Images?.split("----------")!!
         allList.clear()
@@ -93,14 +96,14 @@ class AlphabetMatchFragment : Fragment() {
             shuffledList.add(selectedList[i])
         }
         shuffledList.shuffle()
-        for (i in 0..4){
+        for (i in 0..4) {
             Glide.with(requireContext()).load(images[selectedList[i].toInt()]).into(binding.matchLayout[i] as ImageView)
-            binding.matchLayout[i].tag = selectedList[i]
+            binding.matchLayout[i]!!.tag = selectedList[i]
         }
-        binding.matchAnswerRecyclerview.adapter = ItemMatchAdapter(shuffledList,names)
+        binding.matchAnswerRecyclerview.adapter = ItemMatchAdapter(shuffledList, names)
     }
 
-    private fun winChecker (){
+    private fun winChecker() {
         val refactorList = mutableListOf<Int>()
         for (i in 0..4) {
             if (selectedList[i] === shuffledList[i]) {

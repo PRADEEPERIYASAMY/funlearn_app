@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.funlearnv2.views.Widgets.Patterns
+import com.example.funlearnv2.views.widgets.Patterns
 import com.example.funlearnv2.views.adapters.ItemPatternAdapter
-import com.example.funlearnv2.child.engines.PatternEngine
 import com.example.funlearnv2.databinding.FragmentColouringThreeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,12 +37,6 @@ class ColouringThreeFragment : Fragment() {
             layoutManager = gridLayoutManager
             setHasFixedSize(true)
             adapter = ItemPatternAdapter(25, Patterns.taskColor)
-        }
-        val patternEngine = PatternEngine(binding.patternTask, binding.patternSolution, binding.colorPalate)
-        for (i in 0..24) {
-            binding.patternSolution.layoutManager!!.getChildAt(i)!!.setOnClickListener {
-                patternEngine.taskClickListener(i)
-            }
         }
     }
 
