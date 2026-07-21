@@ -8,14 +8,39 @@
 ![DI](https://img.shields.io/badge/DI-Hilt-3DDC84)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-**FunlearnV2** is a Kotlin rewrite of the original [FunLearn](https://github.com/PRADEEPERIYASAMY/FunLearn) Android learning app for children. It keeps the same product goals — tutorials, quizzes, handwriting practice with on-device OCR, a custom coloring engine, and community chat — but rebuilds the app on a modern Android stack: Kotlin, Hilt DI, coroutines/Flow, ViewModels, DataStore, and a dual Firebase backend (Realtime Database + Firestore).
+**FunlearnV2** is a from-scratch Kotlin rebuild of the original [FunLearn](https://github.com/PRADEEPERIYASAMY/FunLearn) — a two-sided (parent/child) Android learning platform covering tutorials, quizzes, handwriting OCR, a custom coloring engine, and public/private/group chat, built on a dual Firebase backend (Firestore + Realtime Database) with Hilt-driven dependency injection.
 
+Where V1 proved the product concept end-to-end as a solo build, V2 is a deliberate architecture upgrade: DI, a layered repository/ViewModel structure, typed local storage, and role-based navigation replacing V1's single-Activity-per-screen model. The core data layer, auth/role system, chat, and coloring engine are wired and working; several game and quiz screens are still stubs pending the full migration — see [Roadmap](#6-roadmap).
+
+---
+
+## Asset Preview
+
+Static art assets from `res/drawable/`.
+
+<table>
+<tr>
+<td align="center"><img src="https://raw.githubusercontent.com/PRADEEPERIYASAMY/funlearn_app/main/app/src/main/res/drawable/xo_grid.png" width="180"/><br/><sub>Tic-Tac-Toe game board asset</sub></td>
+<td align="center"><img src="https://raw.githubusercontent.com/PRADEEPERIYASAMY/funlearn_app/main/app/src/main/res/drawable/xo_back.png" width="180"/><br/><sub>Game background</sub></td>
+<td align="center">
+<img src="https://raw.githubusercontent.com/PRADEEPERIYASAMY/funlearn_app/main/app/src/main/res/drawable/chess_king_white.png" width="70"/>
+<img src="https://raw.githubusercontent.com/PRADEEPERIYASAMY/funlearn_app/main/app/src/main/res/drawable/chess_queen_black.png" width="70"/>
+<img src="https://raw.githubusercontent.com/PRADEEPERIYASAMY/funlearn_app/main/app/src/main/res/drawable/chess_rook_white.png" width="70"/>
+<br/><sub>Chess piece set (GameFourFragment)</sub></td>
+</tr>
+</table>
+
+---
+
+## Origin
+
+FunlearnV2 began as a proposed project for **Delta Winter of Code (DWoC)**, an initiative run by [Delta](https://github.com/delta-nitt), NIT Trichy's software development club, to get students contributing to real, ongoing codebases in the open-source model. Turnout that cycle was light — this was during COVID — so I took the project forward independently and used the opportunity to scope it well beyond the original: Hilt for DI, a backend split between Firestore and Realtime Database by access pattern, typed DataStore in place of raw SQLite, and a role-scoped navigation model built around 4 host Activities instead of 42 flat ones.
 
 ---
 
 ## Table of Contents
 
-1. [Why a V2](#1-why-a-v2)
+1. [What Changed from V1](#1-what-changed-from-v1)
 2. [System Architecture](#2-system-architecture)
 3. [Feature Notes](#3-feature-notes)
    - [3.1 Roles: Parent, Child & Authentication](#31-roles-parent-child--authentication)
@@ -25,56 +50,84 @@
    - [3.5 Local State — DataStore](#35-local-state--datastore)
 4. [Module Reference](#4-module-reference)
 5. [Tech Stack](#5-tech-stack)
-6. [What's Next](#6-whats-next)
+6. [Roadmap](#6-roadmap)
 7. [Getting Started](#7-getting-started)
 8. [License & Contributing](#8-license--contributing)
 
 ---
 
-## 1. Why a V2
+## 1. What Changed from V1
 
-The original FunLearn was a single-Activity-per-screen Java app with 42 registered Activities, no dependency injection, and Firebase Realtime Database as the only backend. FunlearnV2 is a from-scratch rewrite aimed at fixing exactly those pain points:
-
-| Concern in V1 | V2 change |
-|---|---|
-| 42 Activities, `Intent`-extra navigation | 4 host Activities (`AuthenticationActivity`, `ParentActivity`, `ChildActivity`, `BaseActivity`) + Fragments, so most screens are Fragment transactions inside a shared shell |
-| No DI, manual object wiring | [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) across ViewModels, repositories, and Firebase sources (`FirebaseModules.kt`) |
-| One backend (Realtime DB) for everything | Realtime DB kept for presence/simple key-value data (`FirebaseDbSource.kt`), Firestore added for structured, queryable collections — chat, classes, quizzes, orders (`FireStoreSource.kt`) |
-| Manual SQLite table for local state | [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore) (`DataStoreRepository.kt`) for typed local preferences |
-| No parent/child distinction at the account level | Explicit `Roles` enum (`teacher`, `child`, `parent`, `admin`) and separate `ParentActivity` / `ChildActivity` entry points |
+| Concern | FunLearn V1 | FunlearnV2 | Why it matters |
+|---|---|---|---|
+| Language | Java | Kotlin, full rewrite | Coroutines/Flow-native repository layer |
+| Navigation | 42 Activities, `Intent`-extra passing | 4 host Activities + Fragments, Navigation Component + Safe Args | Type-safe transitions, shared back-stack handling per role |
+| Dependency management | Manual wiring | Hilt across ViewModels, repositories, Firebase sources (`FirebaseModules.kt`) | Testable, swappable dependencies |
+| Backend | Realtime DB only | Realtime DB for presence/light data + Firestore for structured, queryable collections (chat, classes, quizzes, orders) | Firestore's query model fits chat/classroom/quiz data better than flat key lookups |
+| Local storage | Raw `SQLiteOpenHelper` | Jetpack DataStore (`DataStoreRepository.kt`), coroutine-native typed preferences | Cleaner reads/writes, no manual cursor handling |
+| Account model | No parent/child distinction | Explicit `Roles` enum + separate `ParentActivity`/`ChildActivity` entry points, phone-verified parent accounts | Matches how the product is actually used |
+| Async | RxJava2 | Kotlin Coroutines + `kotlinx-coroutines-play-services`, `Flow`-based repositories | Idiomatic Kotlin, sealed `viewmodels/actions` state contracts |
+| Image loading | Glide + Picasso both present | Glide only | One dependency, one caching behavior |
 
 ## 2. System Architecture
 
 ```
-                        ┌─────────────────────┐
-                        │  AuthenticationActivity │
-                        │  (Sign In / Sign Up)    │
-                        └──────────┬───────────┘
-                                   │ Users(role, uid)
-                 ┌─────────────────┼─────────────────┐
-                 ▼                                   ▼
-        ParentActivity                        ChildActivity
-        (ParentDashBoard,                     (DashBoard, Games,
-         ParentVerification)                   Tutorial, Chat, Quiz)
-                 │                                   │
-                 └───────────────┬───────────────────┘
-                                  ▼
-                    ┌──────────────────────────┐
-                    │   Hilt-provided sources    │
-                    ├──────────────────────────┤
-                    │ FirebaseDbSource  (RTDB)   │──► presence, simple counters
-                    │ FireStoreSource   (Firestore) │──► Users, Messages, ClassRoom,
-                    │                              │    Quiz/Questions, Orders, Comments
-                    └──────────────┬───────────┘
-                                   │
-                    ┌──────────────▼───────────┐
-                    │  DataStoreRepository       │
-                    │  (local, per-device cache  │
-                    │   of profile & score/cash) │
-                    └──────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                          AuthenticationActivity                      │
+│                     SignInFragment / SignUpFragment /                │
+│                          UserTypeFragment                            │
+└───────────────────────────────┬────────────────────────────────────--┘
+                                 │  writes Users(uid, role, profile)
+                                 ▼
+                     ┌───────────────────────┐
+                     │   Roles: PARENT/CHILD  │
+                     └──────────┬────────────┘
+              ┌─────────────────┴─────────────────┐
+              ▼                                   ▼
+   ┌─────────────────────┐             ┌─────────────────────┐
+   │   ParentActivity     │             │    ChildActivity     │
+   │ ParentDashBoard,      │             │ DashBoard, Games,     │
+   │ ParentVerification    │             │ Tutorial, Chat, Quiz  │
+   └──────────┬───────────┘             └──────────┬───────────┘
+              │                                    │
+              └─────────────────┬──────────────────┘
+                                 ▼
+                 ┌──────────────────────────────────┐
+                 │      Hilt DI container            │
+                 │  FirebaseModules.kt provides:      │
+                 │  FirebaseAuth · Firestore · RTDB   │
+                 └────────────────┬─────────────────┘
+                                  │
+              ┌───────────────────┼────────────────────┐
+              ▼                                        ▼
+ ┌─────────────────────────┐              ┌──────────────────────────┐
+ │   FirebaseDbSource        │              │    FireStoreSource        │
+ │   (Realtime Database)     │              │    (Firestore)            │
+ │   → presence, counters,   │              │    → Users, Messages,     │
+ │     light key/value data  │              │      ClassRoom, Questions,│
+ │                            │              │      Orders, Comments     │
+ └────────────┬─────────────┘              └────────────┬─────────────┘
+              │                                          │
+              └────────────────────┬─────────────────────┘
+                                    ▼
+                    ┌────────────────────────────────┐
+                    │  Repository layer (ViewModels)   │
+                    │  FireStoreRepository ·            │
+                    │  FirebaseDbRepository ·            │
+                    │  DataStoreRepository               │
+                    └────────────────┬───────────────┘
+                                     ▼
+                    ┌────────────────────────────────┐
+                    │   DataStoreRepository (local)     │
+                    │   Jetpack DataStore Preferences    │
+                    │   → profile cache, score, cash     │
+                    │   → renders instantly while         │
+                    │     Firestore/RTDB sync in the      │
+                    │     background                      │
+                    └────────────────────────────────┘
 ```
 
-**Data split (carried over from V1, refined):** Firestore holds structured content and social data that benefits from querying (`Users`, `Messages`, `ClassRoom`, `Questions`, `Requests`, `Orders`); Realtime Database is reserved for lightweight, frequently-updated key/value data such as online presence. DataStore replaces the old SQLite `Level` table as the local cache for profile fields, score, and cash so the UI has something to render immediately while Firestore/RTDB catch up.
+**Data split:** Firestore holds structured content and social data that benefits from querying (`Users`, `Messages`, `ClassRoom`, `Questions`, `Requests`, `Orders`); Realtime Database is reserved for lightweight, frequently-updated key/value data such as online presence. DataStore replaces the old SQLite `Level` table as the local cache for profile fields, score, and cash so the UI has something to render immediately while Firestore/RTDB catch up.
 
 **DI:** `FirebaseModules.kt` provides `FirebaseAuth`, `FirebaseFirestore`, and `FirebaseDatabase` instances via Hilt; repositories and ViewModels (`FireStoreViewModel`, `FirebaseDbViewModel`, `BaseViewModel`) receive them by constructor injection rather than constructing clients themselves.
 
@@ -114,7 +167,7 @@ Chat is modeled directly in Firestore via `Messages`, `Comments`, `Reactions`, `
 
 ### 3.5 Local State — DataStore
 
-[`repository/DataStoreRepository.kt`](app/src/main/java/com/example/funlearnv2/repository/DataStoreRepository.kt) wraps a single `androidx.datastore.preferences` instance (provided by `ResourceProvider`) with typed getters/setters for every profile field (child + parent), account credentials cache, `score`, and `cash`. Each field is exposed as a `Flow<String>` internally and read via `.first()` for one-shot suspend access — replacing V1's raw `SQLiteOpenHelper` table with a coroutine-friendly, type-checked key-value store. It's still local-only per device, so cross-device sync is not yet solved here either (see [§6](#6-whats-next)).
+[`repository/DataStoreRepository.kt`](app/src/main/java/com/example/funlearnv2/repository/DataStoreRepository.kt) wraps a single `androidx.datastore.preferences` instance (provided by `ResourceProvider`) with typed getters/setters for every profile field (child + parent), account credentials cache, `score`, and `cash`. Each field is exposed as a `Flow<String>` internally and read via `.first()` for one-shot suspend access — replacing V1's raw `SQLiteOpenHelper` table with a coroutine-friendly, type-checked key-value store.
 
 ---
 
@@ -135,7 +188,8 @@ app/src/main/java/com/example/funlearnv2/
 ├── views/
 │   ├── activities/      AuthenticationActivity, BaseActivity, ParentActivity, ChildActivity (§2, §3.1)
 │   ├── fragments/        40+ Fragments — auth, dashboard, alphabets, numbers, games, coloring,
-│   │                      chat, quiz, classroom, settings (§3.1–§3.4)
+│   │                      chat, quiz, classroom, settings (§3.1–§3.4); a subset are stubs
+│   │                      pending the full V1 migration (see Roadmap)
 │   ├── adapters/         18 RecyclerView adapters — one per list-backed screen
 │   └── widgets/          FloodFill, PaintView, ColorView, Patterns, GameImages (§3.2)
 └── FunLearnApplication.kt   @HiltAndroidApp entry point
@@ -163,14 +217,14 @@ app/src/main/java/com/example/funlearnv2/
 
 Full dependency list: [`app/build.gradle`](app/build.gradle).
 
-## 6. What's Next
+## 6. Roadmap
 
-- **Finish the V1 → V2 migration** and retire the legacy Java module once feature parity (all games, all coloring assets, quiz ranking history) is confirmed.
-- **Sync local state across devices** — `DataStoreRepository` (§3.5) is still per-device; move authoritative profile/score/cash reads to Firestore with DataStore purely as a cache.
-- **Consolidate `FirebaseDbSource` vs `FireStoreSource` usage** — some data (e.g. presence) still spans both backends; document or unify which backend owns which field to avoid drift.
-- **Add unit tests** around `FloodFill`, `DataStoreRepository`, and the `viewmodels/actions` contracts — these are the most side-effect-isolated pieces and the best starting point for a JUnit/coroutines-test suite.
-- **Extract game logic from Fragments** (e.g. `GameFourFragment` is large) into ViewModels to make game rules testable independent of the view layer.
-- **Capture real screenshots** of the running V2 app for this README.
+- **Finish stub screens** (a subset of Fragments across games/quiz/settings are wired for navigation but not yet feature-complete) and confirm full V1 → V2 parity, then retire the legacy Java module.
+- **Extend `DataStoreRepository`** into a full offline-first cache layer, with Firestore as the sync source of truth across devices.
+- **Formalize the `FirebaseDbSource` / `FireStoreSource` boundary** into a documented data-ownership map as more collections are added.
+- **Add unit tests**, starting with `FloodFill` and `DataStoreRepository` — both are side-effect-isolated and straightforward to unit test; no test suite exists yet.
+- **Continue extracting game logic into ViewModels** (in progress for the larger game Fragments) to keep game rules testable independent of the view layer.
+- **Replace the Asset Preview with real screenshots/screen recordings** of the running app.
 
 ## 7. Getting Started
 
@@ -190,7 +244,7 @@ cd funlearn_app
 
 ## 8. License & Contributing
 
-This project is built and maintained solo; `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`, if present, should be treated as boilerplate rather than an active open-collaboration process. If you'd like to contribute, open an issue first.
+This project is built and maintained solo; `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md`, if present, should be treated as boilerplate rather than an active open-collaboration process. If you'd like to contribute, open an issue first to discuss scope.
 
 Licensed under [MIT](LICENSE).
 
