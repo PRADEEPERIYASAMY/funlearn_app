@@ -1,4 +1,4 @@
-# FunLearn V2
+# FunlearnV2
 
 ![Platform](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)
 ![Language](https://img.shields.io/badge/Language-Kotlin-7F52FF?logo=kotlin&logoColor=white)
@@ -8,9 +8,8 @@
 ![DI](https://img.shields.io/badge/DI-Hilt-3DDC84)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-**FunLearn V2** is a Kotlin rewrite of the original [FunLearn](https://github.com/PRADEEPERIYASAMY/FunLearn) Android learning app for children. It keeps the same product goals — tutorials, quizzes, handwriting practice with on-device OCR, a custom coloring engine, and community chat — but rebuilds the app on a modern Android stack: Kotlin, Hilt DI, coroutines/Flow, ViewModels, DataStore, and a dual Firebase backend (Realtime Database + Firestore).
+**FunlearnV2** is a Kotlin rewrite of the original [FunLearn](https://github.com/PRADEEPERIYASAMY/FunLearn) Android learning app for children. It keeps the same product goals — tutorials, quizzes, handwriting practice with on-device OCR, a custom coloring engine, and community chat — but rebuilds the app on a modern Android stack: Kotlin, Hilt DI, coroutines/Flow, ViewModels, DataStore, and a dual Firebase backend (Realtime Database + Firestore).
 
-This module (`FunLearnV2/`) lives alongside the legacy Java module in this repository as an in-progress migration, and is documented here on its own terms.
 
 ---
 
@@ -34,7 +33,7 @@ This module (`FunLearnV2/`) lives alongside the legacy Java module in this repos
 
 ## 1. Why a V2
 
-The original FunLearn was a single-Activity-per-screen Java app with 42 registered Activities, no dependency injection, and Firebase Realtime Database as the only backend. FunLearnV2 is a from-scratch rewrite aimed at fixing exactly those pain points:
+The original FunLearn was a single-Activity-per-screen Java app with 42 registered Activities, no dependency injection, and Firebase Realtime Database as the only backend. FunlearnV2 is a from-scratch rewrite aimed at fixing exactly those pain points:
 
 | Concern in V1 | V2 change |
 |---|---|
@@ -85,11 +84,11 @@ The original FunLearn was a single-Activity-per-screen Java app with 42 register
 
 ### 3.1 Roles: Parent, Child & Authentication
 
-`AuthenticationActivity` is the single launcher Activity (see [`AndroidManifest.xml`](FunLearnV2/app/src/main/AndroidManifest.xml)), fronting `SignInFragment` / `SignUpFragment` / `UserTypeFragment`. Account data is modeled as one `Users` document (see [`models/FirestoreModels.kt`](FunLearnV2/app/src/main/java/com/example/funlearnv2/models/FirestoreModels.kt)) carrying **both** child and parent fields (`child_name`, `child_grade`, `parent_name`, `parent_grade`, etc.) plus a `Roles` enum, rather than separate user tables. `ParentVerificationFragment` and `PhoneVerificationFragment` gate access before handing off to `ParentActivity` or `ChildActivity`.
+`AuthenticationActivity` is the single launcher Activity (see [`AndroidManifest.xml`](app/src/main/AndroidManifest.xml)), fronting `SignInFragment` / `SignUpFragment` / `UserTypeFragment`. Account data is modeled as one `Users` document (see [`models/FirestoreModels.kt`](app/src/main/java/com/example/funlearnv2/models/FirestoreModels.kt)) carrying **both** child and parent fields (`child_name`, `child_grade`, `parent_name`, `parent_grade`, etc.) plus a `Roles` enum, rather than separate user tables. `ParentVerificationFragment` and `PhoneVerificationFragment` gate access before handing off to `ParentActivity` or `ChildActivity`.
 
 ### 3.2 Coloring Engine — Flood Fill
 
-The scanline flood-fill from V1 was ported to Kotlin as an `object` singleton ([`views/widgets/FloodFill.kt`](FunLearnV2/app/src/main/java/com/example/funlearnv2/views/widgets/FloodFill.kt)), preserving the same span-queue algorithm to avoid recursive stack overflow on large bitmaps:
+The scanline flood-fill from V1 was ported to Kotlin as an `object` singleton ([`views/widgets/FloodFill.kt`](app/src/main/java/com/example/funlearnv2/views/widgets/FloodFill.kt)), preserving the same span-queue algorithm to avoid recursive stack overflow on large bitmaps:
 
 ```kotlin
 object FloodFill {
@@ -104,7 +103,7 @@ It drives `PaintView.kt` / `ColorView.kt` and is shared across `ColouringOneFrag
 
 ### 3.3 Chat — Public, Private & Group
 
-Chat is modeled directly in Firestore via `Messages`, `Comments`, `Reactions`, `Requests`, and `GroupDetails` (all in [`FirestoreModels.kt`](FunLearnV2/app/src/main/java/com/example/funlearnv2/models/FirestoreModels.kt)), with a `Mode` enum (`PRIVATE`, `PUBLIC`, `GROUP`) distinguishing conversation types on the same collections rather than separate schemas per mode. Fragments split by mode: `PublicChatFragment`, `PrivateChatFragment`, `GroupChatFragment`, `CommonChatFragment` (shared list/composer logic), `CommentFragment`, and `ChatStatusFragment` for presence.
+Chat is modeled directly in Firestore via `Messages`, `Comments`, `Reactions`, `Requests`, and `GroupDetails` (all in [`FirestoreModels.kt`](app/src/main/java/com/example/funlearnv2/models/FirestoreModels.kt)), with a `Mode` enum (`PRIVATE`, `PUBLIC`, `GROUP`) distinguishing conversation types on the same collections rather than separate schemas per mode. Fragments split by mode: `PublicChatFragment`, `PrivateChatFragment`, `GroupChatFragment`, `CommonChatFragment` (shared list/composer logic), `CommentFragment`, and `ChatStatusFragment` for presence.
 
 ### 3.4 Quiz, Classroom & Resources
 
@@ -115,14 +114,14 @@ Chat is modeled directly in Firestore via `Messages`, `Comments`, `Reactions`, `
 
 ### 3.5 Local State — DataStore
 
-[`repository/DataStoreRepository.kt`](FunLearnV2/app/src/main/java/com/example/funlearnv2/repository/DataStoreRepository.kt) wraps a single `androidx.datastore.preferences` instance (provided by `ResourceProvider`) with typed getters/setters for every profile field (child + parent), account credentials cache, `score`, and `cash`. Each field is exposed as a `Flow<String>` internally and read via `.first()` for one-shot suspend access — replacing V1's raw `SQLiteOpenHelper` table with a coroutine-friendly, type-checked key-value store. It's still local-only per device, so cross-device sync is not yet solved here either (see [§6](#6-whats-next)).
+[`repository/DataStoreRepository.kt`](app/src/main/java/com/example/funlearnv2/repository/DataStoreRepository.kt) wraps a single `androidx.datastore.preferences` instance (provided by `ResourceProvider`) with typed getters/setters for every profile field (child + parent), account credentials cache, `score`, and `cash`. Each field is exposed as a `Flow<String>` internally and read via `.first()` for one-shot suspend access — replacing V1's raw `SQLiteOpenHelper` table with a coroutine-friendly, type-checked key-value store. It's still local-only per device, so cross-device sync is not yet solved here either (see [§6](#6-whats-next)).
 
 ---
 
 ## 4. Module Reference
 
 ```
-FunLearnV2/app/src/main/java/com/example/funlearnv2/
+app/src/main/java/com/example/funlearnv2/
 ├── FirebaseSource/     FirebaseDbSource, FireStoreSource, FirebaseModules, Collections — data-source layer (§2)
 ├── models/             DataModel, FirebaseDbModels, FirestoreModels, chatModel, Result — data/DTO layer (§3.3, §3.4)
 ├── repository/         DataStoreRepository (§3.5), FireStoreRepository, FirebaseDbRepository
@@ -162,7 +161,7 @@ FunLearnV2/app/src/main/java/com/example/funlearnv2/
 | Crash/Analytics | Firebase Crashlytics, Analytics | |
 | UI toolkit | Material Components, ConstraintLayout, ViewBinding, RecyclerView | `viewBinding = true` enabled at module level |
 
-Full dependency list: [`FunLearnV2/app/build.gradle`](FunLearnV2/app/build.gradle).
+Full dependency list: [`app/build.gradle`](app/build.gradle).
 
 ## 6. What's Next
 
@@ -177,12 +176,12 @@ Full dependency list: [`FunLearnV2/app/build.gradle`](FunLearnV2/app/build.gradl
 
 ```bash
 git clone https://github.com/PRADEEPERIYASAMY/funlearn_app.git
-cd funlearn_app/FunLearnV2
+cd funlearn_app
 ```
 
 1. Create a Firebase project; enable **Firestore**, **Realtime Database**, **Authentication** (email/password + phone), **Crashlytics**, and **ML Kit Text Recognition**.
-2. Download `google-services.json` into `FunLearnV2/app/` (a placeholder already exists in this repo — replace it with your own project's file).
-3. Open the `FunLearnV2` folder in Android Studio (Gradle + `com.google.gms.google-services` + Hilt + Navigation Safe Args plugins) and let it sync.
+2. Download `google-services.json` into `app/` (a placeholder already exists in this repo — replace it with your own project's file).
+3. Open the repository root folder in Android Studio (Gradle + `com.google.gms.google-services` + Hilt + Navigation Safe Args plugins) and let it sync.
 4. Build:
 
 ```bash
