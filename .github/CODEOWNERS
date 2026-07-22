@@ -1,0 +1,19 @@
+# CODEOWNERS
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repository
+* @PRADEEPERIYASAMY
+
+# Firebase configuration and security rules
+/app/google-services.json @PRADEEPERIYASAMY
+/app/src/main/java/com/example/funlearnv2/FirebaseSource/ @PRADEEPERIYASAMY
+
+# Core architecture
+/app/src/main/java/com/example/funlearnv2/repository/ @PRADEEPERIYASAMY
+/app/src/main/java/com/example/funlearnv2/viewmodels/ @PRADEEPERIYASAMY
+
+# Community and governance documents
+/CONTRIBUTING.md @PRADEEPERIYASAMY
+/CODE_OF_CONDUCT.md @PRADEEPERIYASAMY
+/SECURITY.md @PRADEEPERIYASAMY
+/.github/ @PRADEEPERIYASAMY

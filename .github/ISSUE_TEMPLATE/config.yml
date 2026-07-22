@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/PRADEEPERIYASAMY/FunLearnV2/security
+    about: Report security issues privately via GitHub's security advisory system, not as a public issue.
